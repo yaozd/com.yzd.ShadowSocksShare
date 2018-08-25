@@ -166,12 +166,12 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
-                    <compilerArgs>
+                  <!--  <compilerArgs>
                         <arg>-verbose</arg>
                         <arg>-Xlint:all</arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
+                    <showDeprecation>true</showDeprecation>-->
                 </configuration>
             </plugin>
         </plugins>
