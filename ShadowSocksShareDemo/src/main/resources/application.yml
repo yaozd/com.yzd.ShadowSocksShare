@@ -3,7 +3,7 @@
 # ========== 自定义 ==========
 # 服务端口号
 server:
-  port: 8080
+  port: 28080
 
 # ========== Spring ==========
 spring:
@@ -57,7 +57,8 @@ spring:
     fallback-to-system-local: true
 
   # 字符集
-  mandatory-file-encoding: UTF-8
+  #mandatory-file-encoding强制文件编码为UTF-8，如果不注释此项，在window下打包后启动会报错
+  #mandatory-file-encoding: UTF-8
   tomcat.uri-encoding: UTF-8
   messages.encoding: UTF-8
   http:
