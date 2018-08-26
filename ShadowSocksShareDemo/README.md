@@ -14,7 +14,11 @@ http://localhost:8080/subscribe?valid=1
 ```
 ShadowSocks-Share
 https://github.com/zc-zh-001/ShadowSocks-Share
+https://github.com/yaozd/ShadowSocks-Share(备份)
 感谢作者zc-zh-001的贡献
+爬虫项目-crawler
+https://github.com/zhou1hang/crawler
+https://github.com/yaozd/crawler(备份)
 ```
 
 ### 数据提取思路：
@@ -42,6 +46,8 @@ https://github.com/zc-zh-001/ShadowSocks-Share
 ```
 java爬取网页内容 简单例子（2）——附jsoup的select用法详解
 https://www.cnblogs.com/xiaoMzjm/p/3899366.html
+在Java代码中解析html,获得其中的值
+https://blog.csdn.net/zhanglei500038/article/details/74858395
 ```
 
 ### 正则模板

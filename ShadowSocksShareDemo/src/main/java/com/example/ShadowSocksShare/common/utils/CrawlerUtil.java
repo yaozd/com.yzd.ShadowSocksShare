@@ -22,6 +22,18 @@ public class CrawlerUtil {
         return null;
     }
     /***
+     *通过正则获得text
+     */
+    public static String getTextByRegex(String item,String regEx){
+        String str=item;
+        Matcher mat = RegExUtil.getMatcher(regEx, str);
+        //使用group时一定要使用mat.find()方法才可以读取到
+        if(mat.find()){
+            return mat.group(1).trim();
+        }
+        return null;
+    }
+    /***
      * 通过元素获得text
      * @param item
      * @param cssQuery

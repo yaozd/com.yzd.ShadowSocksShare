@@ -4,6 +4,9 @@ import com.example.ShadowSocksShare.Application;
 import com.google.zxing.NotFoundException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,16 @@ public class ParseTool_UnitTest {
     @Autowired
     CrawlerServiceImpl_iShadow crawlerServiceImplIShadow;
 
+    @Test
+    public void parseHtml_Test() throws Exception {
+        //
+        //在Java代码中解析html,获得其中的值
+        //https://blog.csdn.net/zhanglei500038/article/details/74858395
+        String html = "htmltest";
+        Document doc = Jsoup.parse(html);
+        Elements rows = doc.select("table[class=list]").get(0).select("tr");
+
+    }
     @Test
       public void parseLink_Test() throws Exception {
         //正常SSR数据

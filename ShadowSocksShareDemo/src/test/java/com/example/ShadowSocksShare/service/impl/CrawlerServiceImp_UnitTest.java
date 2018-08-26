@@ -24,6 +24,8 @@ public class CrawlerServiceImp_UnitTest {
     CrawlerServiceImpl_iShadow crawlerServiceImplIShadow;
     @Autowired
     CrawlerServiceImpl_sharefanqiang crawlerServiceImplSharefanqiang;
+    @Autowired
+    CrawlerServiceImpl_FreeYitianjianss crawlerServiceImplFreeYitianjianss;
     @Test
     public void CrawlerServiceImpl_iShadow_Test() throws Exception {
         shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
@@ -31,5 +33,9 @@ public class CrawlerServiceImp_UnitTest {
     @Test
     public void CrawlerServiceImpl_sharefanqiang_Test() throws Exception {
         shadowSocksService.crawlerAndSave(crawlerServiceImplSharefanqiang);
+    }
+    @Test
+    public void CrawlerServiceImpl_FreeYitianjianss_Test() throws Exception {
+        shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
     }
 }

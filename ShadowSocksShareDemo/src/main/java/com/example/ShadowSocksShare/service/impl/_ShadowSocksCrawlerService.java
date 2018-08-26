@@ -64,6 +64,7 @@ public abstract class _ShadowSocksCrawlerService {
         try {
             document = getConnection(getTargetURL()).get();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new IOException("请求[" + getTargetURL() + "]异常：" + e.getMessage(), e);
         }
         return document;
@@ -91,7 +92,11 @@ public abstract class _ShadowSocksCrawlerService {
         try {
             Document document = getDocument();
             ShadowSocksEntity entity = new ShadowSocksEntity(getTargetURL(), document.title(), true, new Date());
-            entity.setShadowSocksSet(parse(document));
+            try {
+                entity.setShadowSocksSet(parse(document));
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
             return entity;
         } catch (IOException e) {
             log.error(e.getMessage());
@@ -192,7 +197,7 @@ public abstract class _ShadowSocksCrawlerService {
     /**
      * 网页内容解析 ss 信息
      */
-    protected abstract Set<ShadowSocksDetailsEntity> parse(Document document);
+    protected abstract Set<ShadowSocksDetailsEntity> parse(Document document) throws IOException, NotFoundException;
 
     /**
      * 目标网站 URL
