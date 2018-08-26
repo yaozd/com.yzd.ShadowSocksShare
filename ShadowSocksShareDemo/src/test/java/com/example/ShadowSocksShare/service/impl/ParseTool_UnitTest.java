@@ -1,6 +1,7 @@
 package com.example.ShadowSocksShare.service.impl;
 
 import com.example.ShadowSocksShare.Application;
+import com.example.ShadowSocksShare.common.utils.SSRParseUtil;
 import com.example.ShadowSocksShare.domain.ShadowSocksDetailsEntity;
 import com.google.zxing.NotFoundException;
 import org.apache.commons.codec.binary.Base64;
@@ -90,5 +91,11 @@ public class ParseTool_UnitTest {
     public void parseURL() throws IOException, NotFoundException {
         String url = "https://free.yitianjianss.com/img/qrcode_image/293/c797e96ed6969ab4bc24726104fe12ea.png";
         crawlerServiceImplIShadow.parseURL(url);
+    }
+
+    @Test
+    public void parseSSR() throws IOException, NotFoundException {
+        String linkText = "ssr://MTUwLjY2LjQ1LjIwNDoyMzMzOmF1dGhfYWVzMTI4X21kNTphZXMtMTI4LWN0cjpwbGFpbjpKQ2M2WDNaMlkzaDBaM0kwTTNsb2RuWnFhbWsyTlRSeGN5QmlhSFJ5Y25RM056Vm5ZbU5wUGo4bS8_b2Jmc3BhcmFtPQ";
+        SSRParseUtil.parseLink(linkText);
     }
 }

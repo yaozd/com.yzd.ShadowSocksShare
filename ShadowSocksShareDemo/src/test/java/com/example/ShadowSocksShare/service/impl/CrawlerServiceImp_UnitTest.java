@@ -47,4 +47,10 @@ public class CrawlerServiceImp_UnitTest {
         shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
     }
     //===================================================
+    @Autowired
+    CrawlerServiceImpl_Google crawlerServiceImplGoogle;
+    @Test
+    public void CrawlerServiceImpl_Google_Test() throws Exception {
+        shadowSocksService.crawlerAndSave(crawlerServiceImplGoogle);
+    }
 }

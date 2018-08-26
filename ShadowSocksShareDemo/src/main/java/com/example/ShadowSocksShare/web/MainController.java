@@ -5,6 +5,7 @@ import com.example.ShadowSocksShare.domain.ShadowSocksEntity;
 import com.example.ShadowSocksShare.service.crawler.ShadowSocksService;
 import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_DoubIo;
 import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_FreeYitianjianss;
+import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_Google;
 import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_iShadow;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.zxing.WriterException;
@@ -102,7 +103,8 @@ public class MainController {
     CrawlerServiceImpl_FreeYitianjianss crawlerServiceImplFreeYitianjianss;
     @Autowired
     CrawlerServiceImpl_DoubIo crawlerServiceImplDoubIo;
-
+    @Autowired
+    CrawlerServiceImpl_Google crawlerServiceImplGoogle;
     /***
      * 数据加载
      * @param name
@@ -111,7 +113,8 @@ public class MainController {
     @RequestMapping(value = "/run")
     @ResponseBody
     public ResponseEntity<String> run(String name) {
-        shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
+        shadowSocksService.crawlerAndSave(crawlerServiceImplGoogle);
+        //shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
         //shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
         //shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
         return ResponseEntity.ok().body("数据加载-OK...");

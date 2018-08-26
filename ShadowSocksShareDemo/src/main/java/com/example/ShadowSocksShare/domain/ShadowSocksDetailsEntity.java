@@ -55,11 +55,19 @@ public class ShadowSocksDetailsEntity implements Serializable {
 
 	@Column
 	// @NonNull
-	private String protocol;    // 协议
+	private String protoparam="";    // 协议参数
+
+    @Column
+    // @NonNull
+    private String protocol;    // 协议
 
 	@Column
 	// @NonNull
 	private String obfs;    // 混淆
+
+    @Column
+    // @NonNull
+    private String obfsparam="";    // 混淆参数
 
 	// 非必填
 	@Column
@@ -97,6 +105,8 @@ public class ShadowSocksDetailsEntity implements Serializable {
 		json.put("obfs", obfs);
 		json.put("method", method);
 		json.put("ssr_protocol", protocol);
+        json.put("obfsparam", obfsparam);
+        json.put("protoparam", protoparam);
 		return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(json);
 	}
 
@@ -115,8 +125,8 @@ public class ShadowSocksDetailsEntity implements Serializable {
 				.append(SSR_LINK_SEPARATOR).append(method)
 				.append(SSR_LINK_SEPARATOR).append(obfs)
 				.append(SSR_LINK_SEPARATOR).append(Base64.encodeBase64URLSafeString(password.getBytes(StandardCharsets.UTF_8)))
-				.append("/?obfsparam=")
-				// .append("&protoparam=")
+				.append("/?obfsparam=").append(Base64.encodeBase64URLSafeString(obfsparam.getBytes(StandardCharsets.UTF_8)))
+				 .append("&protoparam=").append(Base64.encodeBase64URLSafeString(protoparam.getBytes(StandardCharsets.UTF_8)))
 				.append("&remarks=").append(Base64.encodeBase64URLSafeString(remarks.getBytes(StandardCharsets.UTF_8)))
 				.append("&group=").append(Base64.encodeBase64URLSafeString(group.getBytes(StandardCharsets.UTF_8)));
 		return "ssr://" + Base64.encodeBase64URLSafeString(link.toString().getBytes(StandardCharsets.UTF_8));

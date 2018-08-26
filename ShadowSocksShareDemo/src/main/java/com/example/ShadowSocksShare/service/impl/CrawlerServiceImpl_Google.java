@@ -1,67 +1,55 @@
 package com.example.ShadowSocksShare.service.impl;
 
-import com.example.ShadowSocksShare.common.constantExt.PublicCon;
 import com.example.ShadowSocksShare.common.utils.ChromeWebDriverUtil;
-import com.example.ShadowSocksShare.common.utils.CrawlerUtil;
+import com.example.ShadowSocksShare.common.utils.RegExUtil;
 import com.example.ShadowSocksShare.common.utils.SSRParseUtil;
 import com.example.ShadowSocksShare.domain.ShadowSocksDetailsEntity;
+import com.google.zxing.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by zd.yao on 2018/8/26.
  */
 @Slf4j
 @Service
-public class CrawlerServiceImpl_DoubIo extends _ShadowSocksCrawlerService {
-    //免费账号分享 | 逗比根据地-目前最好的分享网站-byArvin
+public class CrawlerServiceImpl_Google extends _ShadowSocksCrawlerService {
     // 目标网站URL
-    private static final String TARGET_URL = "https://doub.io/sszhfx/";
-    private static final String GROUP_NAME = "_DoubIo";
+    private static final String TARGET_URL = "https://plus.google.com/communities/106442142549456855872/stream/62937124-015f-4f9c-81c9-914444653b8a";
+    private static final String GROUP_NAME = "_Google";
+
     @Override
-    protected Set<ShadowSocksDetailsEntity> parse(Document document){
+    protected Set<ShadowSocksDetailsEntity> parse(Document document) throws IOException, NotFoundException {
         String bodyHtml=document.body().html();
         Set<ShadowSocksDetailsEntity> entityHashSet = new HashSet<>();
-        entityHashSet.addAll(parseFun1(bodyHtml));
         entityHashSet.addAll(parseFun2(bodyHtml));
-        return entityHashSet;
-    }
-    //匹配模式一
-    protected Set<ShadowSocksDetailsEntity> parseFun1(String bodyHtml){
-        Set<ShadowSocksDetailsEntity> entityHashSet = new HashSet<>();
-        //String reg="ssr://[\\w]+";
-        String reg="ssr</span><span class=\"pun\">:</span><span class=\"com\">//([\\w]+)";
-        List<String> itemList=getMatchers(reg,bodyHtml);
-        if(itemList.isEmpty()){return new HashSet<>();}
-
-        for(String item:itemList ){
-            String linkData= CrawlerUtil.getTextByRegex(item, reg);
-            String linkTxt="ssr://"+linkData;
-            ShadowSocksDetailsEntity entity=itemToEntity(linkTxt);
-            if(entity==null){continue;}
-            entityHashSet.add(entity);
-        }
         return entityHashSet;
     }
     //匹配模式二
     protected Set<ShadowSocksDetailsEntity> parseFun2(String bodyHtml){
         Set<ShadowSocksDetailsEntity> entityHashSet = new HashSet<>();
+        int count=0;
         String reg="ssr://[\\w]+";
-        //String reg="ssr</span><span class=\"pun\">:</span><span class=\"com\">//([\\w]+)";
-        List<String> itemList=getMatchers(reg,bodyHtml);
+        List<String> itemList= RegExUtil.getMatchers(reg,bodyHtml);
         if(itemList.isEmpty()){return new HashSet<>();}
 
         for(String item:itemList ){
             ShadowSocksDetailsEntity entity=itemToEntity(item);
             if(entity==null){continue;}
             entityHashSet.add(entity);
+            count++;
+            if(count>10){
+                break;
+            }
         }
         return entityHashSet;
     }
@@ -83,8 +71,10 @@ public class CrawlerServiceImpl_DoubIo extends _ShadowSocksCrawlerService {
         // 测试网络
         if (isReachable(entity)){
             entity.setValid(true);
+            return entity;
         }
-        return entity;
+        //return entity;
+        return null;
     }
     /**
      * 连接解析
@@ -98,17 +88,6 @@ public class CrawlerServiceImpl_DoubIo extends _ShadowSocksCrawlerService {
         String html= ChromeWebDriverUtil.getHtml(getTargetURL());
         return  Jsoup.parse(html);
     }
-    private List<String> getMatchers(String regex, String source){
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(source);
-        List<String> list = new ArrayList<>();
-        while (matcher.find()) {
-            list.add(matcher.group());
-        }
-        return list;
-    }
-
-
     @Override
     protected String getTargetURL() {
         return TARGET_URL;
@@ -116,17 +95,16 @@ public class CrawlerServiceImpl_DoubIo extends _ShadowSocksCrawlerService {
 
     @Override
     protected boolean isProxyEnable() {
-        return true;
+        return false;
     }
 
     @Override
     protected String getProxyHost() {
-        return PublicCon.ProxyHost;
+        return null;
     }
 
     @Override
     protected int getProxyPort() {
-        return PublicCon.ProxyPort;
+        return 0;
     }
 }
-

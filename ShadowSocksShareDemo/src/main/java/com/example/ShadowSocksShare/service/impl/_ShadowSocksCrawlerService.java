@@ -42,7 +42,7 @@ public abstract class _ShadowSocksCrawlerService {
     // 目标网站请求超时时间（60 秒）
     protected static final int TIME_OUT = 60 * 1000;
     // 测试网络超时时间（3 秒）
-    protected static final int SOCKET_TIME_OUT = 3 * 1000;
+    protected static final int SOCKET_TIME_OUT = 2 * 1000;
 
     /**
      * 网络连通性测试

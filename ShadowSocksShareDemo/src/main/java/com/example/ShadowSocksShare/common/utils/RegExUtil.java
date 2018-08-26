@@ -201,5 +201,14 @@ public class RegExUtil {
         Pattern pat = Pattern.compile(regEx);
         return pat.matcher(str);
     }
+    public static List<String> getMatchers(String regex, String source){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(source);
+        List<String> list = new ArrayList<>();
+        while (matcher.find()) {
+            list.add(matcher.group());
+        }
+        return list;
+    }
 }
 
