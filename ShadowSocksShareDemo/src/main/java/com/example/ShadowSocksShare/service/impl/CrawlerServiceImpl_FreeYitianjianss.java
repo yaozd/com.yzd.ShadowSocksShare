@@ -1,5 +1,6 @@
 package com.example.ShadowSocksShare.service.impl;
 
+import com.example.ShadowSocksShare.common.constantExt.PublicCon;
 import com.example.ShadowSocksShare.common.utils.ChromeWebDriverUtil;
 import com.example.ShadowSocksShare.common.utils.CrawlerUtil;
 import com.example.ShadowSocksShare.domain.ShadowSocksDetailsEntity;
@@ -10,10 +11,7 @@ import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,25 +29,39 @@ public class CrawlerServiceImpl_FreeYitianjianss extends _ShadowSocksCrawlerServ
         String bodyHtml=document.body().html();
         String reg="src=\"(/img/qrcode_image[^\"]+)\">";
         List<String> itemList=getMatchers(reg,bodyHtml);
-        for(String item:itemList){
-            String imgPath= CrawlerUtil.getTextByRegex(item,reg);
-            String imgUrl=TARGET_URL+imgPath;
-            ShadowSocksDetailsEntity ss = null;
-            try {
-                ss = parseURL(imgUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
-            ss.setValid(false);
-            ss.setValidTime(new Date());
-            ss.setTitle(document.title());
-            ss.setRemarks(TARGET_URL);
-            ss.setGroup("ShadowSocks-Share");
-
+        if(itemList.isEmpty()){return new HashSet<>();}
+        Set<ShadowSocksDetailsEntity> entityHashSet = new HashSet<>();
+        for(String item:itemList ){
+            ShadowSocksDetailsEntity entity=itemToEntity(item);
+            if(entity==null){continue;}
+            entityHashSet.add(entity);
         }
-        return null;
+        return entityHashSet;
+    }
+    private ShadowSocksDetailsEntity itemToEntity(String item){
+        String reg="src=\"(/img/qrcode_image[^\"]+)\">";
+        String imgPath= CrawlerUtil.getTextByRegex(item,reg);
+        String imgUrl=TARGET_URL+imgPath;
+        ShadowSocksDetailsEntity entity = null;
+        try {
+            entity = parseURL(imgUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        //=====
+        entity.setValid(false);
+        entity.setValidTime(new Date());
+        entity.setTitle(GROUP_NAME);
+        entity.setGroup(GROUP_NAME);
+        entity.setRemarks(TARGET_URL);
+        //======
+        // 测试网络
+        if (isReachable(entity)){
+            entity.setValid(true);
+        }
+        return entity;
     }
     @Override
     protected Document getDocument(){
@@ -74,16 +86,16 @@ public class CrawlerServiceImpl_FreeYitianjianss extends _ShadowSocksCrawlerServ
 
     @Override
     protected boolean isProxyEnable() {
-        return false;
+        return true;
     }
 
     @Override
     protected String getProxyHost() {
-        return null;
+        return PublicCon.ProxyHost;
     }
 
     @Override
     protected int getProxyPort() {
-        return 0;
+        return PublicCon.ProxyPort;
     }
 }

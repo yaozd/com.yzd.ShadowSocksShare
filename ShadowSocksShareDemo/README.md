@@ -1,6 +1,9 @@
 
 ### 使用方法
 ```
+PublicCon.class
+public static final String ChromeWebDriverPath="E:\\webdrvier\\chromedriver.exe";
+==
 1.加载数据
 http://localhost:8080/run
 2.查看数据
@@ -8,6 +11,13 @@ http://localhost:8080/
 3.订阅数据
 http://localhost:8080/subscribe?valid=1
 
+```
+
+### 使用代理的思考(为什么浏览器可打开但代码不可以打开的原因)
+```
+为什么浏览器可打开但代码不可以打开的原因
+1.WebDriver是打开浏览器是自动的走代理
+2.httpClient或jspon是通过代码，必须人为的设置代理
 ```
 
 ### 参考代码
