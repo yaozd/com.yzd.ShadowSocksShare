@@ -38,4 +38,13 @@ public class CrawlerServiceImp_UnitTest {
     public void CrawlerServiceImpl_FreeYitianjianss_Test() throws Exception {
         shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
     }
+    //免费账号分享 | 逗比根据地-目前最好的分享网站-byArvin
+    @Autowired
+    CrawlerServiceImpl_DoubIo crawlerServiceImplDoubIo;
+
+    @Test
+    public void CrawlerServiceImpl_DoubIo_Test() throws Exception {
+        shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
+    }
+    //===================================================
 }

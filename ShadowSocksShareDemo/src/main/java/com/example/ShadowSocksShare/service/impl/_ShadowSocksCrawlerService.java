@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Socket;
@@ -107,7 +108,7 @@ public abstract class _ShadowSocksCrawlerService {
     /**
      * 连接解析
      */
-    protected ShadowSocksDetailsEntity parseLink(String link) {
+    protected ShadowSocksDetailsEntity parseLink(String link) throws UnsupportedEncodingException {
         // 分为 SSR 或 SS
         if (StringUtils.isNotBlank(link) && StringUtils.startsWithIgnoreCase(link, "ssr")) {
             String ssrInfoStr = new String(Base64.decodeBase64(StringUtils.remove(link, "ssr://").getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);

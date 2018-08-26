@@ -3,6 +3,7 @@ package com.example.ShadowSocksShare.web;
 import com.example.ShadowSocksShare.domain.ShadowSocksDetailsEntity;
 import com.example.ShadowSocksShare.domain.ShadowSocksEntity;
 import com.example.ShadowSocksShare.service.crawler.ShadowSocksService;
+import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_DoubIo;
 import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_FreeYitianjianss;
 import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_iShadow;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -99,6 +100,8 @@ public class MainController {
     CrawlerServiceImpl_iShadow crawlerServiceImplIShadow;
     @Autowired
     CrawlerServiceImpl_FreeYitianjianss crawlerServiceImplFreeYitianjianss;
+    @Autowired
+    CrawlerServiceImpl_DoubIo crawlerServiceImplDoubIo;
 
     /***
      * 数据加载
@@ -108,8 +111,9 @@ public class MainController {
     @RequestMapping(value = "/run")
     @ResponseBody
     public ResponseEntity<String> run(String name) {
-        shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
-        shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
+        shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
+        //shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
+        //shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
         return ResponseEntity.ok().body("数据加载-OK...");
     }
     //======================================================================
