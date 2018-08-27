@@ -31,7 +31,7 @@ public class WebDriverUtil {
         }
         System.getProperties().setProperty("webdriver.chrome.driver", path);
         WebDriver webDriver = new ChromeDriver();
-        webDriver.manage().timeouts().pageLoadTimeout(1200, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         webDriver.manage().window().setSize(new Dimension(1024, 768));
         return webDriver;
     }

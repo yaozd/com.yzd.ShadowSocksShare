@@ -3,10 +3,7 @@ package com.example.ShadowSocksShare.web;
 import com.example.ShadowSocksShare.domain.ShadowSocksDetailsEntity;
 import com.example.ShadowSocksShare.domain.ShadowSocksEntity;
 import com.example.ShadowSocksShare.service.crawler.ShadowSocksService;
-import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_DoubIo;
-import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_FreeYitianjianss;
-import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_Google;
-import com.example.ShadowSocksShare.service.impl.CrawlerServiceImpl_iShadow;
+import com.example.ShadowSocksShare.service.impl.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.zxing.WriterException;
 import lombok.extern.slf4j.Slf4j;
@@ -118,6 +115,22 @@ public class MainController {
         //shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
         //shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
         return ResponseEntity.ok().body("数据加载-OK...");
+    }
+    @Autowired
+    CrawlerServiceImpl_Google2 crawlerServiceImplGoogle2;
+    @RequestMapping(value = "/run/google2")
+    @ResponseBody
+    public ResponseEntity<String> run_google2(String name) {
+        shadowSocksService.crawlerAndSave(crawlerServiceImplGoogle2);
+        return ResponseEntity.ok().body("数据加载(google2)-OK...");
+    }
+    @Autowired
+    CrawlerServiceImpl_Google3 crawlerServiceImplGoogle3;
+    @RequestMapping(value = "/run/google3")
+    @ResponseBody
+    public ResponseEntity<String> run_google3(String name) {
+        shadowSocksService.crawlerAndSave(crawlerServiceImplGoogle3);
+        return ResponseEntity.ok().body("数据加载(google3)-OK...");
     }
     //======================================================================
 }
