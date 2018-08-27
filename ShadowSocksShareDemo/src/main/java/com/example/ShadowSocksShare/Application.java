@@ -17,6 +17,17 @@ public class Application {
         SpringApplication app = new SpringApplication(Application.class);
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);
+        openHttp();
+    }
+
+    private static void openHttp() {
+        String path = "http://localhost:28080/";
+        Runtime run = Runtime.getRuntime();
+        try {
+            Process process = run.exec("cmd.exe /k start " + path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
