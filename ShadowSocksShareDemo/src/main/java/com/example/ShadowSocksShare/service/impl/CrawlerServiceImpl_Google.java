@@ -25,13 +25,14 @@ import java.util.Set;
 public class CrawlerServiceImpl_Google extends _ShadowSocksCrawlerService {
     // 目标网站URL
     private static final String TARGET_URL = "https://plus.google.com/communities/106442142549456855872/stream/62937124-015f-4f9c-81c9-914444653b8a";
-    private static final String GROUP_NAME = "_Google";
+    private static final String GROUP_NAME = "A1Google";
 
     @Override
     protected Set<ShadowSocksDetailsEntity> parse(Document document) throws IOException, NotFoundException {
         String bodyHtml=document.body().html();
         Set<ShadowSocksDetailsEntity> entityHashSet = new HashSet<>();
         entityHashSet.addAll(parseFun2(bodyHtml));
+        System.out.println(GROUP_NAME+"执行完成。");
         return entityHashSet;
     }
     //匹配模式二
@@ -47,9 +48,10 @@ public class CrawlerServiceImpl_Google extends _ShadowSocksCrawlerService {
             if(entity==null){continue;}
             entityHashSet.add(entity);
             count++;
-            if(count>10){
+            if(count>5){
                 break;
             }
+            System.out.println(GROUP_NAME+"总数6，当前计数="+count);
         }
         return entityHashSet;
     }
