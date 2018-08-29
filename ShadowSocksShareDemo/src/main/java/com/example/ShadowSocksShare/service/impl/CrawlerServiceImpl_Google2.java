@@ -68,7 +68,7 @@ public class CrawlerServiceImpl_Google2 extends _ShadowSocksCrawlerService {
         entity.setValidTime(new Date());
         entity.setTitle(GROUP_NAME);
         entity.setGroup(GROUP_NAME);
-        entity.setRemarks(TARGET_URL);
+        entity.setRemarks(entity.getServer()+":"+entity.getServer_port());
         //======
         // 测试网络
         if (isReachable(entity)){
