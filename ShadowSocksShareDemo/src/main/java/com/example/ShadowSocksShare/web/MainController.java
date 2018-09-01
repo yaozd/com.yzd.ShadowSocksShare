@@ -1,5 +1,6 @@
 package com.example.ShadowSocksShare.web;
 
+import com.example.ShadowSocksShare.common.utils.DosUtil;
 import com.example.ShadowSocksShare.domain.ShadowSocksDetailsEntity;
 import com.example.ShadowSocksShare.domain.ShadowSocksEntity;
 import com.example.ShadowSocksShare.service.crawler.ShadowSocksService;
@@ -93,6 +94,31 @@ public class MainController {
                 .body(shadowSocksService.createQRCodeImage(text, width, height));
     }
     //======================================================================
+    /***
+     * 数据加载
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/run/all")
+    @ResponseBody
+    public ResponseEntity<String> run_all(String name) {
+        DosUtil.openHttp("http://localhost:28080/run/google3");
+        sleep15S();
+        DosUtil.openHttp("http://localhost:28080/run/google2");
+        sleep15S();
+        DosUtil.openHttp("http://localhost:28080/run/google1");
+        sleep15S();
+        DosUtil.openHttp("http://localhost:28080/run/other");
+        return ResponseEntity.ok().body("SSR数据加载打开全部/run/all-OK...");
+    }
+    private void sleep15S(){
+        try {
+            TimeUnit.SECONDS.sleep(15);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    //======================================================================
 
     @Autowired
     CrawlerServiceImpl_iShadow crawlerServiceImplIShadow;
@@ -100,6 +126,20 @@ public class MainController {
     CrawlerServiceImpl_FreeYitianjianss crawlerServiceImplFreeYitianjianss;
     @Autowired
     CrawlerServiceImpl_DoubIo crawlerServiceImplDoubIo;
+    /***
+     * 数据加载
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/run/other")
+    @ResponseBody
+    public ResponseEntity<String> run_other(String name) {
+        shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
+        shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
+        shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
+        return ResponseEntity.ok().body("数据加载-OK...");
+    }
+
     @Autowired
     CrawlerServiceImpl_Google crawlerServiceImplGoogle;
     /***
@@ -107,13 +147,9 @@ public class MainController {
      * @param name
      * @return
      */
-    @RequestMapping(value = "/run")
+    @RequestMapping(value = "/run/google1")
     @ResponseBody
-    public ResponseEntity<String> run(String name) {
-        shadowSocksService.crawlerAndSave(crawlerServiceImplGoogle);
-        //shadowSocksService.crawlerAndSave(crawlerServiceImplDoubIo);
-        //shadowSocksService.crawlerAndSave(crawlerServiceImplIShadow);
-        //shadowSocksService.crawlerAndSave(crawlerServiceImplFreeYitianjianss);
+    public ResponseEntity<String> run_google1(String name) {
         return ResponseEntity.ok().body("数据加载-OK...");
     }
     @Autowired

@@ -1,5 +1,6 @@
 package com.example.ShadowSocksShare;
 
+import com.example.ShadowSocksShare.common.utils.DosUtil;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,19 +18,9 @@ public class Application {
         SpringApplication app = new SpringApplication(Application.class);
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);
-        openHttp();
+        DosUtil.openHttp("http://localhost:28080/");
+        DosUtil.openHttp("http://localhost:28080/run/all");
     }
-
-    private static void openHttp() {
-        String path = "http://localhost:28080/";
-        Runtime run = Runtime.getRuntime();
-        try {
-            Process process = run.exec("cmd.exe /k start " + path);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 设置默认时区
      */

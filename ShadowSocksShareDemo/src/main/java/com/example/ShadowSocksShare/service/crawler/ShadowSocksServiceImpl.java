@@ -52,16 +52,22 @@ public class ShadowSocksServiceImpl implements ShadowSocksService {
         ShadowSocksEntity socksEntity = service.getShadowSocks();
         long end = System.currentTimeMillis();
         log.debug("抓取执行时间： {} 毫秒", end - begin);
+        try {
 
-        // 2. SS 信息入库
-        if (socksEntity != null) {
-            // shadowSocksRepository.deleteByTargetURL(socksEntity.getTargetURL());
-            ShadowSocksEntity entity = shadowSocksRepository.findByTargetURL(socksEntity.getTargetURL());
-            if (entity != null)
-                shadowSocksRepository.delete(entity);
+            // 2. SS 信息入库
+            if (socksEntity != null) {
+                // shadowSocksRepository.deleteByTargetURL(socksEntity.getTargetURL());
+                ShadowSocksEntity entity = shadowSocksRepository.findByTargetURL(socksEntity.getTargetURL());
+                if (entity != null)
+                    shadowSocksRepository.delete(entity);
 
-            shadowSocksRepository.save(socksEntity);
-            log.debug("入库执行时间： {} 毫秒", System.currentTimeMillis() - end);
+                shadowSocksRepository.save(socksEntity);
+                log.debug("入库执行时间： {} 毫秒", System.currentTimeMillis() - end);
+            }
+
+        } catch (Exception ex) {
+            //防止程序中断
+            ex.printStackTrace();
         }
     }
 
